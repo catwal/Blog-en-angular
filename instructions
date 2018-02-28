@@ -38,9 +38,9 @@ ng generate class article => cree fichier article.ts dans app
 
 
 github
+attention avec angular ne pas faire de read.md sur github, angular en créé un
 git add .
 git commit -m""
 git status
 git remote add origin https://github.com/catwal/Blog-en-angular.git
-git fetch //pour recuperer dans origin
 git push -u origin master //-u master local va correspondre a la branche master origin
