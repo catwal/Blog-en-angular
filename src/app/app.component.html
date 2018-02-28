@@ -23,23 +23,22 @@
 <!-- Header -->
 <header class="masthead bg-primary text-white text-center">
     <div class="container">
-        <img class="img-fluid mb-5 d-block mx-auto" src="../assets/img/earth1.png" alt="">
+        <img class="img-fluid mb-3 d-block mx-auto" src="../assets/img/earth1.png" alt="">
         <h1 class="text-uppercase mb-0">Un petit coin de paradis</h1>
-        <br/>
-        <img class="img-fluid mb-5 d-block mx-auto" src="../assets/img/earth-min.png" alt="">
+        <hr class="star-light">
         <h2 class="font-weight-light mb-0">Web Developer en puissance</h2>
     </div>
 </header>
 
 <div class="container">
-    <div class="listArticle">
-        <div class="article">
-            <h2>{{ article?.title }}</h2>
+    <div class="listArticle" *ngIf="!editing">
+        <div class="article" *ngFor="let article of articles">
+             <h2>{{ article?.title }}</h2>
             <p>{{ article?.description }}</p>
         </div>
-        <button class="btn btn-info">Ajouter un article</button>
+        <button class="btn btn-info"(click)="addArticle()">Ajouter un article</button>
     </div>
-    <div class="container-fluid bg-light py-3">
+    <div class="container-fluid bg-light py-3" *ngIf="editing">
         <form id="contact-form" method="post" action="contact.php" role="form">
             <div class="messages"></div>
             <div class="controls">
