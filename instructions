@@ -45,3 +45,7 @@ git status
 git remote add origin https://github.com/catwal/Blog-en-angular.git
 git fetch
 git push -u origin master //-u master local va correspondre a la branche master origin
+
+
+directives ngModel: https://www.w3schools.com/angular/angular_model.asp
+https://www.concretepage.com/angular-2/angular-2-ngform-with-ngmodel-directive-example
