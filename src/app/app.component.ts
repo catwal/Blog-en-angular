@@ -18,7 +18,7 @@ export class AppComponent {
 
     constructor(private articleService: ArticleService) {
         this.editing = false;
-        this.editArticle = new Article(0, '');
+        this.editArticle = new Article();
         this.title = 'BlogAngular';
         this.articles = new Array();
         //        this.articles.push(new Article(99, 'Article de test', 'Super description...'));
@@ -42,9 +42,27 @@ export class AppComponent {
         setTimeout(() => this.editing = false);
     }
     saveArticle(myForm: NgForm) {
-        /*utilisation du JSON pour serializer et deserializer le texte- permettra d'utiliser une autre adresse memoire pour eviter que le reset n'efface ce qui vien d'être tapé par le user*/
-        this.articles.push(JSON.parse(JSON.stringify(this.editArticle)));
+        if (this.editArticle.id >= 0) {
+            this.articleService.update(this.editArticle).subscribe((article) => {
+                let index = this.articles.findIndex((value: Article) => value.id === article.id);
+                this.articles.splice(index, 1, article);
+            });
+        } else {
+            /*utilisation du JSON pour serializer et deserializer le texte- permettra d'utiliser une autre adresse memoire pour eviter que le reset n'efface ce qui vien d'être tapé par le user*/
+            //        this.articles.push(JSON.parse(JSON.stringify(this.editArticle))); au lieu de ça on fait appel a notre couche métier
+            this.articleService.create(this.editArticle).subscribe((article) => this.articles.push(article));
+        }
+        this.editArticle.id = undefined;
         myForm.resetForm();
+    }
 
+    modifyArticle(id: number, index: number) {
+        this.editArticle = this.articles[index];
+        //bascule l'affichage vers le formulaire
+        this.addArticle()
+
+    }
+    deleteArticle(id: number, index: number) {
+        this.articles.splice(index, 1);
     }
 }
