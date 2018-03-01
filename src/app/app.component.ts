@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NgForm} from '@angular/forms';
 
 import {Article} from './article';
+import {ArticleService} from './article.service';
 
 @Component({
     selector: 'app-root',
@@ -15,12 +16,22 @@ export class AppComponent {
     editArticle: Article;
 
 
-    constructor() {
+    constructor(private articleService: ArticleService) {
         this.editing = false;
         this.editArticle = new Article(0, '');
         this.title = 'BlogAngular';
         this.articles = new Array();
         //        this.articles.push(new Article(99, 'Article de test', 'Super description...'));
+    }
+    ngOnInit() {
+        this.articleService.list().subscribe({
+            next: (articles) => {
+                this.articles = articles;
+            },
+            error: (response) => {
+                console.log('Impossible de récuperer les articles dans le fichier JSON', response);
+            }
+        });
     }
 
     addArticle() {
